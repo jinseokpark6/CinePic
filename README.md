@@ -10,20 +10,22 @@ Time spent: **6** hours spent in total
 
 The following **required** functionality is complete:
 
-* [X] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
-* [X] Settings page to change the default tip percentage.
+* [X] User can view a list of movies currently playing in theaters from The Movie Database.
+* [X] Poster images are loaded using the UIImageView category in the AFNetworking library.
+* [X] The movie poster is available by appending the returned poster_path to https://image.tmdb.org/t/p/w342.
+* [X] User sees a loading state while waiting for the movies API (you can use any 3rd party library available to do this).
+* [X] User can pull to refresh the movie list.
 
 The following **optional** features are implemented:
-* [X] UI animations
-* [ ] Remembering the bill amount across app restarts (if <10mins)
-* [ ] Using locale-specific currency and currency thousands separators.
-* [X] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
+
+* [X] User sees an error message when there's a networking error.
+* [X] Movies are displayed using a CollectionView instead of a TableView.
+* [X] User can search for a movie.
+* [X] All images fade in as they are loading.
 
 The following **additional** features are implemented:
 
-- [X] List anything else that you can get done to improve the app functionality!
-- [X] Users can use slider to navigate between tip amounts
-- [X] Users can customize minimum/maximum tip percentages
+- [X] User can press cell to view the title and overview of the corresponding movie.
 
 ## Video Walkthrough 
 
