@@ -4,7 +4,7 @@
 
 Submitted by: **Jin Seok Park**
 
-Time spent: **6** hours spent in total
+Time spent: **8** hours spent in total
 
 ## User Stories
 
@@ -38,6 +38,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+- Tried to implement a custom view for the reloading view but encountered difficulties in making it look fluid and natural.
 
 ## License
 
