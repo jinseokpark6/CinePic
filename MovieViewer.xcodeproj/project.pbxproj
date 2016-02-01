@@ -15,7 +15,9 @@
 		74DC92631C5839A000F398D6 /* MovieViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC92621C5839A000F398D6 /* MovieViewerTests.swift */; };
 		74DC926E1C5839A000F398D6 /* MovieViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC926D1C5839A000F398D6 /* MovieViewerUITests.swift */; };
 		74DC927C1C583B2E00F398D6 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC927B1C583B2E00F398D6 /* MoviesViewController.swift */; };
-		74DC927F1C583E9F00F398D6 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC927E1C583E9F00F398D6 /* MovieCell.swift */; };
+		74E9E89F1C59B7BA00A71FA0 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E9E89E1C59B7BA00A71FA0 /* MovieCell.swift */; };
+		74EA4B7D1C5EC7A80018F7D5 /* fumes.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EA4B7B1C5EC7A80018F7D5 /* fumes.png */; };
+		74EA4B7E1C5EC7A80018F7D5 /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EA4B7C1C5EC7A80018F7D5 /* mountain.png */; };
 		9B79A046D136EC56D1E36D93 /* Pods_MovieViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 825E36C4340A797E437A2FEE /* Pods_MovieViewer.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +55,9 @@
 		74DC926D1C5839A000F398D6 /* MovieViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewerUITests.swift; sourceTree = "<group>"; };
 		74DC926F1C5839A000F398D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74DC927B1C583B2E00F398D6 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
-		74DC927E1C583E9F00F398D6 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		74E9E89E1C59B7BA00A71FA0 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		74EA4B7B1C5EC7A80018F7D5 /* fumes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fumes.png; sourceTree = "<group>"; };
+		74EA4B7C1C5EC7A80018F7D5 /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mountain.png; sourceTree = "<group>"; };
 		825E36C4340A797E437A2FEE /* Pods_MovieViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -125,6 +129,8 @@
 		74DC924C1C5839A000F398D6 /* MovieViewer */ = {
 			isa = PBXGroup;
 			children = (
+				74EA4B7B1C5EC7A80018F7D5 /* fumes.png */,
+				74EA4B7C1C5EC7A80018F7D5 /* mountain.png */,
 				74DC92801C583EA200F398D6 /* View Controllers */,
 				74DC927D1C583E8B00F398D6 /* Views */,
 				74DC924D1C5839A000F398D6 /* AppDelegate.swift */,
@@ -158,7 +164,7 @@
 		74DC927D1C583E8B00F398D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				74DC927E1C583E9F00F398D6 /* MovieCell.swift */,
+				74E9E89E1C59B7BA00A71FA0 /* MovieCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -278,6 +284,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74EA4B7D1C5EC7A80018F7D5 /* fumes.png in Resources */,
+				74EA4B7E1C5EC7A80018F7D5 /* mountain.png in Resources */,
 				74DC92581C5839A000F398D6 /* LaunchScreen.storyboard in Resources */,
 				74DC92551C5839A000F398D6 /* Assets.xcassets in Resources */,
 				74DC92531C5839A000F398D6 /* Main.storyboard in Resources */,
@@ -355,7 +363,7 @@
 			files = (
 				74DC92501C5839A000F398D6 /* ViewController.swift in Sources */,
 				74DC924E1C5839A000F398D6 /* AppDelegate.swift in Sources */,
-				74DC927F1C583E9F00F398D6 /* MovieCell.swift in Sources */,
+				74E9E89F1C59B7BA00A71FA0 /* MovieCell.swift in Sources */,
 				74DC927C1C583B2E00F398D6 /* MoviesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
