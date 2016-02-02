@@ -265,6 +265,19 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func refresh() {
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionView.indexPathForCell(cell)
+        let movie = data![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+        
+
+        
+    }
 
     /*
     // MARK: - Navigation
