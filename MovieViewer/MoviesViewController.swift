@@ -15,8 +15,11 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var movies: [Movie]!
+    
     var data: [NSDictionary]?
-    var filteredData: [NSDictionary]!
+    var filteredData: [Movie]!
+    var endPoint: String!
     
     var leftEdge: CGFloat?
     var rightEdge: CGFloat?
@@ -32,6 +35,8 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -60,7 +65,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)")
         let request = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
@@ -87,9 +92,10 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
                             // Hide HUD once the network request comes back (must be done on main UI thread)
                             MBProgressHUD.hideHUDForView(self.view, animated: true)
                             
-                            self.data = responseDictionary["results"] as! [NSDictionary]
                             
-                            self.filteredData = self.data
+                            self.data = responseDictionary["results"] as! [NSDictionary]
+                            self.organizeData()
+                            self.filteredData = self.movies
                             
                             self.collectionView.reloadData()
                             
@@ -104,6 +110,24 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         task.resume()
     }
 
+    func organizeData() {
+        self.movies = [Movie]()
+        for (var i=0; i<self.data!.count; i++) {
+            let movie = data![i]
+            let title = movie["title"] as! String
+            let overview = movie["overview"] as! String
+            var s_posterUrl = NSURL(string: "")
+            var o_posterUrl = NSURL(string: "")
+            if let posterPath = movie["poster_path"] as? String {
+                let s_posterBaseUrl = "http://image.tmdb.org/t/p/w500"
+                s_posterUrl = NSURL(string: s_posterBaseUrl + posterPath)
+                let o_posterBaseUrl = "https://image.tmdb.org/t/p/original"
+                o_posterUrl = NSURL(string: o_posterBaseUrl + posterPath)
+            }
+            let object = Movie(title: title, overview: overview, s_i: s_posterUrl!, o_i: o_posterUrl!)
+            movies.append(object)
+        }
+    }
     
 
     override func didReceiveMemoryWarning() {
@@ -113,27 +137,22 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("movieCell", forIndexPath: indexPath) as! MovieCell
         
-        let movie = filteredData![indexPath.row]
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
-        if let posterPath = movie["poster_path"] as? String {
-            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
-            let posterUrl = NSURL(string: posterBaseUrl + posterPath)
-            cell.posterView.setImageWithURL(posterUrl!)
+        let movie = filteredData[indexPath.row]
+        if movie.small_image != "" {
+            cell.posterView.setImageWithURL(movie.small_image)
         }
         else {
             // No poster image. Can either set to nil (no image) or a default movie poster image
             // that you include as an asset
-            cell.posterView.image = nil
+            cell.posterView.image = UIImage(named: "no_image.png")
         }
-        
-        
         cell.posterView.alpha = 0.0
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             cell.posterView.alpha = 1.0
             })
-        cell.titleLabel.text = title
-        cell.descriptionLabel.text = overview
+        
+        cell.titleLabel.text = movie.title
+        cell.descriptionLabel.text = movie.overview
         cell.titleLabel.alpha = 0.0
         cell.descriptionLabel.alpha = 0.0
 
@@ -147,6 +166,9 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+    }
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! MovieCell
         if detailCellPath == nil {
             cell.fadeOut()
@@ -181,7 +203,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         // When there is no text, filteredData is the same as the original data
         if searchText.isEmpty {
-            filteredData = data
+            filteredData = movies
         } else {
             // The user has entered text into the search box
             // Use the filter method to iterate over all items in the data array
@@ -189,13 +211,12 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
             // item should NOT be included
             
             var titleData: [String] = [String]()
-            for movie in data! {
-                titleData.append(movie["title"] as! String)
+            for movie in movies! {
+                titleData.append(movie.title)
             }
-            
-            filteredData = data!.filter({(dataItem: NSDictionary) -> Bool in
+            filteredData = movies!.filter({(dataItem: Movie) -> Bool in
                 // If dataItem's title matches the searchText, return true to include it
-                if let title = dataItem["title"] as? String {
+                if let title = dataItem.title as? String {
                     if title.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
                         return true
                     } else {
@@ -270,11 +291,16 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let cell = sender as! UICollectionViewCell
         let indexPath = collectionView.indexPathForCell(cell)
-        let movie = data![indexPath!.row]
+        let movie = movies![indexPath!.row]
         
         let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.movie = movie
         
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
+        
+        detailViewController.hidesBottomBarWhenPushed = true
 
         
     }
